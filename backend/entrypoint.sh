@@ -3,6 +3,13 @@ set -e
 
 echo "[entrypoint] Checking startup tasks..."
 
+echo "[entrypoint] Waiting for database..."
+until python -c "import socket; s=socket.create_connection(('${DB_HOST:-db}', int('${DB_PORT:-5432}')), 2); s.close()" 2>/dev/null; do
+    echo "[entrypoint] Database not ready, retrying in 2s..."
+    sleep 2
+done
+echo "[entrypoint] Database is reachable."
+
 if [ "$RUN_MIGRATIONS" != "false" ]; then
     echo "[entrypoint] Running database migrations..."
     gosu appuser python manage.py migrate --noinput

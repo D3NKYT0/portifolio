@@ -20,7 +20,7 @@ export function PortfolioGame() {
   const [activeSection, setActiveSection] = useState<WorldSection>('about')
   const [coins, setCoins] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const { data, isLoading, error } = usePortfolio()
+  const { data, isLoading, error, refetch, isFetching } = usePortfolio({ enabled: started })
   const { muted, boot, sfx, toggle } = useSound()
 
   const handleSectionChange = useCallback((section: WorldSection) => {
@@ -73,7 +73,7 @@ export function PortfolioGame() {
     )
   }
 
-  if (isLoading) {
+  if (isLoading || (isFetching && !data)) {
     return (
       <div className={styles.loading}>
         <div className={styles.loadingBlock}>?</div>
@@ -86,8 +86,10 @@ export function PortfolioGame() {
     return (
       <div className={styles.loading}>
         <p>GAME OVER</p>
-        <p className={styles.errorMsg}>Erro ao carregar portfólio</p>
-        <button type="button" className="pixel-btn" onClick={() => window.location.reload()}>
+        <p className={styles.errorMsg}>
+          {error instanceof Error ? error.message : 'Erro ao carregar portfólio'}
+        </p>
+        <button type="button" className="pixel-btn" onClick={() => refetch()}>
           TENTAR NOVAMENTE
         </button>
       </div>

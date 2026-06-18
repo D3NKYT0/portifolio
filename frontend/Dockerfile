@@ -15,6 +15,14 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM alpine:3.21 AS sync
-COPY --from=builder /app/dist /dist
-CMD ["sh", "-c", "cp -r /dist/* /app/dist/ && echo ready > /app/dist/.ready"]
+FROM alpine:3.21
+
+WORKDIR /app
+
+COPY entrypoint.sh /usr/local/bin/frontend-sync.sh
+RUN sed -i 's/\r$//' /usr/local/bin/frontend-sync.sh \
+    && chmod +x /usr/local/bin/frontend-sync.sh
+
+COPY --from=builder /app/dist /opt/frontend-dist
+
+CMD ["sh", "/usr/local/bin/frontend-sync.sh"]

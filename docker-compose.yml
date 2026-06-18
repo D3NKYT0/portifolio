@@ -143,12 +143,12 @@ services:
       - frontend_static:/var/www/frontend:ro
     depends_on:
       backend:
-        condition: service_started
+        condition: service_healthy
       frontend_dev:
         condition: service_started
         required: false
       frontend:
-        condition: service_started
+        condition: service_healthy
         required: false
     networks:
       - denky_net
