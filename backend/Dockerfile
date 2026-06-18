@@ -30,5 +30,5 @@ RUN useradd -m -u 1000 appuser && \
 
 EXPOSE 8000
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
 CMD ["gunicorn", "core.wsgi:application", "-c", "gunicorn.conf.py"]

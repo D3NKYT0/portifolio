@@ -12,8 +12,12 @@ cp backend/.env.production backend/.env
 ## 2. Subir o stack
 
 ```bash
+docker compose down
 docker compose up --build -d
 ```
+
+> Se aparecer `permission denied` no entrypoint, atualize o projeto (git pull) e rebuild.
+> O entrypoint roda via `/bin/sh` — não depende mais de `chmod +x` no Windows.
 
 ## 3. Criar superusuário (admin)
 

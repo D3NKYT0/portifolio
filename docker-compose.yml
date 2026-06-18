@@ -7,6 +7,7 @@ volumes:
   frontend_static:
   frontend_node_modules:
   media_files:
+  static_files:
 
 x-backend-app-image: &backend-app-image
   image: denky_backend:local
@@ -42,17 +43,16 @@ services:
     command: gunicorn core.wsgi:application -c gunicorn.conf.py
     restart: unless-stopped
     volumes:
-      - ./backend:/app
-      - ./backend/staticfiles:/app/staticfiles
+      - static_files:/app/staticfiles
       - media_files:/app/media
     env_file:
       - ./.env
       - backend/.env
     environment:
       DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-core.settings.production}
-      GUNICORN_RELOAD: ${GUNICORN_RELOAD:-true}
+      GUNICORN_RELOAD: ${GUNICORN_RELOAD:-false}
       RUN_MIGRATIONS: "true"
-      RUN_COLLECTSTATIC: "false"
+      RUN_COLLECTSTATIC: "true"
     depends_on:
       db:
         condition: service_healthy
@@ -138,7 +138,7 @@ services:
       - ./nginx/frontend_serve_dev.conf:/etc/nginx/frontend_serve_dev.conf:ro
       - ./nginx/frontend_serve_static.conf:/etc/nginx/frontend_serve_static.conf:ro
       - ./nginx/security_headers.conf:/etc/nginx/security_headers.conf:ro
-      - ./backend/staticfiles:/var/www/static:ro
+      - static_files:/var/www/static:ro
       - media_files:/var/www/media:ro
       - frontend_static:/var/www/frontend:ro
     depends_on:
