@@ -65,17 +65,38 @@ Efeitos 8-bit gerados via Web Audio API (sem arquivos externos). A preferência 
 | Error | Erro no contato |
 | Bump | Bater na borda do mapa |
 
-## Produção
+## Produção (denky.dev.br)
 
-No `.env` raiz:
+### DNS
+Aponte `denky.dev.br` e `www.denky.dev.br` para o IP do servidor (ou Cloudflare proxy).
 
+### `.env` raiz
 ```
 COMPOSE_PROFILES=static
 FRONTEND_SERVE_MODE=static
+VITE_API_URL=/api/v1
+VITE_FRONTEND_URL=https://denky.dev.br
 ```
+
+### `backend/.env`
+```
+DEBUG=False
+SECRET_KEY=<chave-longa-e-aleatoria>
+ALLOWED_HOSTS=denky.dev.br,www.denky.dev.br,backend
+DB_PASSWORD=<senha-forte>
+CORS_ALLOWED_ORIGINS=https://denky.dev.br,https://www.denky.dev.br
+CSRF_TRUSTED_ORIGINS=https://denky.dev.br,https://www.denky.dev.br
+SESSION_COOKIE_SECURE=True
+CSRF_COOKIE_SECURE=True
+```
+
+### HTTPS
+O Nginx do projeto escuta na porta **80**. Em produção, use **Cloudflare** (SSL Full) ou um Nginx/Caddy na frente terminando HTTPS e repassando para `:80`.
 
 Depois:
 
 ```bash
 docker compose up --build -d
 ```
+
+Site: https://denky.dev.br
