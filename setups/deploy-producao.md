@@ -47,29 +47,43 @@ Libere apenas: **80**, **443** (se terminar SSL no host) e **22** (SSH).
 
 Não exponha PostgreSQL (5432) publicamente.
 
-## 7. Troubleshooting — "GAME OVER"
+## 7. Troubleshooting — "GAME OVER" / 502
 
-1. Teste a API no servidor:
+Rode o diagnóstico:
 
 ```bash
-curl -s http://localhost/api/v1/system/health/
-curl -s http://localhost/api/v1/public/portfolio/ | head -c 200
-docker compose logs backend --tail 80
+sh setups/check.sh
 ```
 
-2. **Senha do banco divergente** (comum no 1º deploy):
+### 502 Bad Gateway na API
 
-`DB_PASSWORD` deve ser **igual** em `.env` e `backend/.env`.
-
-Se o Postgres foi criado com senha antiga, recrie o volume:
+1. **Backend caído** — veja logs:
 
 ```bash
+docker compose logs backend --tail 50
+```
+
+2. **Senha do Postgres divergente** — `DB_PASSWORD` igual em `.env` e `backend/.env`:
+
+```bash
+grep DB_PASSWORD .env backend/.env
 docker compose down
 docker volume rm denky_postgres_data
 docker compose up -d
 ```
 
-3. **Atualizar após correções**:
+3. **Nginx sem resolver** — atualize `nginx/nginx.conf` (git pull) e reinicie:
+
+```bash
+docker compose restart nginx
+```
+
+### Aviso CSP Cloudflare Insights
+
+Normal com Cloudflare Analytics. Já liberado em `security_headers.conf`.  
+O aviso do Kaspersky é do antivírus no browser — pode ignorar ou desativar a extensão ao testar.
+
+### Atualizar após correções
 
 ```bash
 docker compose up --build -d

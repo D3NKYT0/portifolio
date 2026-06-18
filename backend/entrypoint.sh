@@ -12,7 +12,10 @@ echo "[entrypoint] Database is reachable."
 
 if [ "$RUN_MIGRATIONS" != "false" ]; then
     echo "[entrypoint] Running database migrations..."
-    gosu appuser python manage.py migrate --noinput
+    if ! gosu appuser python manage.py migrate --noinput; then
+        echo "[entrypoint] ERRO: migrate falhou. Verifique DB_PASSWORD em .env e backend/.env (devem ser iguais)." >&2
+        exit 1
+    fi
 else
     echo "[entrypoint] Skipping database migrations (RUN_MIGRATIONS=false)."
 fi
