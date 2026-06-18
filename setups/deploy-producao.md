@@ -83,8 +83,10 @@ docker compose restart nginx
 Normal com Cloudflare Analytics. Já liberado em `security_headers.conf`.  
 O aviso do Kaspersky é do antivírus no browser — pode ignorar ou desativar a extensão ao testar.
 
-### Atualizar após correções
+### Atualizar frontend (modo static)
 
 ```bash
-docker compose up --build -d
+docker compose --profile static up --build -d frontend nginx
 ```
+
+Confirme no `.env`: `COMPOSE_PROFILES=static` e `FRONTEND_SERVE_MODE=static`.
