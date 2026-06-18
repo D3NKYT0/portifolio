@@ -1,0 +1,183 @@
+.game {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, var(--mario-sky) 0%, var(--mario-sky-dark) 65%);
+  overflow: hidden;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cloud {
+  position: absolute;
+  background: var(--mario-white);
+  border-radius: 50%;
+  box-shadow:
+    20px 0 0 var(--mario-white),
+    40px -8px 0 var(--mario-white),
+    60px 0 0 var(--mario-white);
+  opacity: 0.8;
+}
+
+.cloud1 {
+  width: 40px;
+  height: 24px;
+  top: calc(var(--hud-height) + 20px);
+  left: 10%;
+  animation: cloud-drift 40s linear infinite;
+}
+
+.cloud2 {
+  width: 32px;
+  height: 20px;
+  top: calc(var(--hud-height) + 60px);
+  left: 50%;
+  animation: cloud-drift 35s linear infinite reverse;
+}
+
+.cloud3 {
+  width: 48px;
+  height: 28px;
+  top: calc(var(--hud-height) + 10px);
+  right: 15%;
+  animation: cloud-drift 45s linear infinite;
+  animation-delay: -15s;
+}
+
+.scenery {
+  position: absolute;
+  bottom: 72px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hill {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 100px;
+  height: 50px;
+  background: var(--mario-green);
+  border-radius: 50px 50px 0 0;
+  border: 3px solid var(--mario-black);
+}
+
+.hillSmall {
+  left: auto;
+  right: 10%;
+  width: 70px;
+  height: 35px;
+  border-radius: 35px 35px 0 0;
+}
+
+.brickRow {
+  position: absolute;
+  bottom: 60px;
+  right: 20%;
+  display: flex;
+  gap: 2px;
+}
+
+.brick {
+  width: 32px;
+  height: 32px;
+  background: var(--mario-brick);
+  border: 2px solid var(--mario-black);
+  box-shadow: inset -2px -2px 0 var(--mario-brick-dark);
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: var(--mario-ground);
+  border-top: 8px solid var(--mario-ground-top);
+  z-index: 10;
+}
+
+.ground::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--mario-ground-top) 0px,
+    var(--mario-ground-top) 16px,
+    #008000 16px,
+    #008000 32px
+  );
+}
+
+.worldScroll {
+  position: absolute;
+  inset: var(--hud-height) 0 72px 0;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.sectionsTrack {
+  width: 100%;
+  height: 100%;
+}
+
+.controlsHint {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 60;
+  white-space: nowrap;
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--mario-black);
+  font-size: 12px;
+}
+
+.loadingBlock {
+  width: 48px;
+  height: 48px;
+  background: var(--mario-yellow);
+  border: 4px solid var(--mario-white);
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  color: var(--mario-black);
+  animation: block-bounce 0.5s ease infinite;
+}
+
+.errorMsg {
+  font-size: 8px;
+  color: var(--mario-red);
+}
+
+@media (max-width: 600px) {
+  .controlsHint {
+    display: none;
+  }
+
+  .brickRow {
+    display: none;
+  }
+}
