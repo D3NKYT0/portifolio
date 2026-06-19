@@ -333,24 +333,29 @@
   border-bottom-width: 3px;
 }
 
-.stageCard {
+.stageOverlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  inset: 0;
   z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  pointer-events: none;
+}
+
+.stageCard {
   width: min(440px, calc(100vw - 40px));
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  transform: translate(-50%, -50%);
   padding: 24px;
   color: var(--game-cream);
   background: rgba(16, 15, 26, 0.96);
   border: 4px solid var(--game-cream);
   box-shadow: 0 0 0 6px var(--ink), 12px 12px 0 rgba(0, 0, 0, 0.35);
   text-align: center;
-  pointer-events: none;
+  animation: stage-card-pop 0.18s cubic-bezier(0.2, 0.85, 0.35, 1.25) both;
 }
 
 .stageCard span {
@@ -496,5 +501,109 @@
 
   .worldScroll {
     inset-block-start: 110px;
+  }
+}
+@keyframes stage-card-pop {
+  from { transform: scale(1.15); }
+  to { transform: scale(1); }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .missionBar {
+    width: calc(100vw - 24px);
+  }
+
+  .worldScroll {
+    inset-inline: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sun {
+    top: 32px;
+    right: 6%;
+    width: 42px;
+    height: 42px;
+  }
+
+  .scenery {
+    height: 145px;
+  }
+
+  .missionBar {
+    grid-template-columns: auto minmax(0, 1fr);
+    top: 61px;
+    min-height: 46px;
+  }
+
+  .missionCopy {
+    text-align: center;
+  }
+
+  .completion {
+    display: none;
+  }
+
+  .worldScroll {
+    inset: 112px 0 138px;
+  }
+
+  .mobileControls {
+    gap: 9px;
+  }
+
+  .mobileControls button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .stageOverlay {
+    padding: 12px;
+  }
+
+  .stageCard {
+    width: min(100%, 360px);
+    gap: 10px;
+    padding: 18px 10px;
+    box-shadow: 0 0 0 4px var(--ink), 7px 7px 0 rgba(0, 0, 0, 0.32);
+  }
+
+  .stageCard strong {
+    font-size: clamp(11px, 5vw, 15px);
+  }
+}
+
+@media (max-width: 350px) {
+  .missionBar {
+    grid-template-columns: 1fr;
+  }
+
+  .missionId {
+    display: none;
+  }
+}
+
+@media (max-height: 560px) {
+  .missionBar {
+    top: 58px;
+    min-height: 42px;
+    padding-block: 5px;
+  }
+
+  .missionCopy span {
+    display: none;
+  }
+
+  .worldScroll {
+    inset-block: 104px 124px;
+  }
+
+  .scenery {
+    height: 120px;
+  }
+
+  .stageCard {
+    max-height: calc(100dvh - 24px);
+    padding-block: 14px;
   }
 }

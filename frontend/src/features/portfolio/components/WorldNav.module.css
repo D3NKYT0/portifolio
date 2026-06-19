@@ -224,3 +224,49 @@
     display: none;
   }
 }
+@media (max-width: 420px) {
+  .nav {
+    width: calc(100vw - 6px);
+    padding-inline: 2px;
+  }
+
+  .node {
+    padding-inline: 1px;
+  }
+
+  .label {
+    max-width: 52px;
+  }
+}
+
+@media (max-height: 560px) {
+  .nav {
+    bottom: 50px;
+    height: 76px;
+  }
+
+  .nav::before {
+    inset-block-start: 31px;
+  }
+
+  .route {
+    bottom: 25px;
+  }
+
+  .heroRunner {
+    bottom: 36px;
+    transform: translateX(-50%) scale(0.68);
+    transform-origin: bottom center;
+  }
+
+  .icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .label,
+  .stageNumber,
+  .nav::after {
+    display: none;
+  }
+}

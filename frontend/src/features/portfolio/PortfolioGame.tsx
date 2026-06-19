@@ -221,15 +221,17 @@ export function PortfolioGame() {
       <AnimatePresence>
         {showStageCard && (
           <motion.div
-            className={styles.stageCard}
-            initial={{ opacity: 0, scale: 1.2 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            className={styles.stageOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.16 }}
             aria-live="polite"
           >
-            <span>WORLD {stage.number}</span>
-            <strong>{stage.title}</strong>
+            <div className={styles.stageCard}>
+              <span>WORLD {stage.number}</span>
+              <strong>{stage.title}</strong>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

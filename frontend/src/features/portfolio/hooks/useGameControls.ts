@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { SoundId } from '@/features/portfolio/audio/chiptune'
 import type { WorldSection } from '@/types/portfolio'
 
@@ -18,6 +18,8 @@ export function useGameControls(
 ) {
   const [isJumping, setIsJumping] = useState(false)
   const [facingRight, setFacingRight] = useState(true)
+  const jumpTimer = useRef<number | undefined>(undefined)
+  const jumpFrame = useRef<number | undefined>(undefined)
 
   const moveLeft = useCallback(() => {
     const idx = SECTIONS.indexOf(activeSection)
@@ -41,9 +43,21 @@ export function useGameControls(
 
   const jump = useCallback(() => {
     sfx('jump')
-    setIsJumping(true)
-    setTimeout(() => setIsJumping(false), 600)
+    window.clearTimeout(jumpTimer.current)
+    window.cancelAnimationFrame(jumpFrame.current ?? 0)
+
+    // Reinicia a classe para que cada toque, inclusive em sequência, refaça o pulo.
+    setIsJumping(false)
+    jumpFrame.current = window.requestAnimationFrame(() => {
+      setIsJumping(true)
+      jumpTimer.current = window.setTimeout(() => setIsJumping(false), 650)
+    })
   }, [sfx])
+
+  useEffect(() => () => {
+    window.clearTimeout(jumpTimer.current)
+    window.cancelAnimationFrame(jumpFrame.current ?? 0)
+  }, [])
 
   useEffect(() => {
     if (!enabled) return
@@ -53,6 +67,12 @@ export function useGameControls(
       const isTyping = target?.matches('input, textarea, select, [contenteditable="true"]')
 
       if (isTyping) return
+
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault()
+        jump()
+        return
+      }
 
       switch (e.key) {
         case 'ArrowLeft':
@@ -70,7 +90,6 @@ export function useGameControls(
         case 'ArrowUp':
         case 'w':
         case 'W':
-        case ' ':
           e.preventDefault()
           jump()
           break

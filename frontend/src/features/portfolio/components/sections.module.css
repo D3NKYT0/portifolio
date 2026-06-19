@@ -525,3 +525,24 @@
     margin-bottom: 12px;
   }
 }
+@media (max-width: 480px) {
+  .panel {
+    padding: 13px 12px;
+  }
+
+  .title {
+    top: -13px;
+    gap: 8px;
+    margin-bottom: 11px;
+  }
+
+  .profileCard {
+    align-items: start;
+  }
+
+  .contactInfo,
+  .projectCard p,
+  .summary {
+    overflow-wrap: anywhere;
+  }
+}
