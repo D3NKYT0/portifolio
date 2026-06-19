@@ -1,4 +1,14 @@
 :root {
+  --ink: #100f1a;
+  --game-navy: #181a2f;
+  --game-panel: #202746;
+  --game-cream: #fff5d6;
+  --game-coral: #f05a4f;
+  --game-coral-dark: #ad302f;
+  --game-yellow: #ffd741;
+  --game-mint: #62d78f;
+  --game-sky: #65b9ff;
+  --game-sky-deep: #3c7dd9;
   --mario-sky: #5c94fc;
   --mario-sky-dark: #3a6fd8;
   --mario-red: #e52521;
@@ -17,7 +27,7 @@
   --mario-black: #000;
   --mario-shadow: rgba(0, 0, 0, 0.35);
   --pixel-font: 'Press Start 2P', monospace;
-  --hud-height: 48px;
+  --hud-height: 56px;
 }
 
 *,
@@ -42,6 +52,14 @@ body {
   color: var(--mario-white);
   image-rendering: pixelated;
   -webkit-font-smoothing: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--game-yellow);
+  outline-offset: 3px;
 }
 
 button {
@@ -164,4 +182,15 @@ textarea {
 @keyframes pipe-grow {
   from { transform: scaleY(0); transform-origin: bottom; }
   to { transform: scaleY(1); transform-origin: bottom; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

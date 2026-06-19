@@ -3,7 +3,6 @@ import type { SoundId } from '@/features/portfolio/audio/chiptune'
 import type { WorldSection } from '@/types/portfolio'
 
 const SECTIONS: WorldSection[] = [
-  'start',
   'about',
   'skills',
   'experience',
@@ -50,6 +49,11 @@ export function useGameControls(
     if (!enabled) return
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      const isTyping = target?.matches('input, textarea, select, [contenteditable="true"]')
+
+      if (isTyping) return
+
       switch (e.key) {
         case 'ArrowLeft':
         case 'a':

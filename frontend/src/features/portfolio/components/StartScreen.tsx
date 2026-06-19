@@ -10,42 +10,60 @@ interface StartScreenProps {
 export function StartScreen({ onStart, muted, onToggleSound }: StartScreenProps) {
   return (
     <div className={styles.screen}>
+      <div className={styles.scanlines} aria-hidden="true" />
       <div className={styles.soundToggle}>
         <SoundToggle muted={muted} onToggle={onToggleSound} compact />
       </div>
-      <div className={styles.sky}>
+
+      <div className={styles.sky} aria-hidden="true">
         <div className={`${styles.cloud} ${styles.cloud1}`} />
         <div className={`${styles.cloud} ${styles.cloud2}`} />
         <div className={`${styles.cloud} ${styles.cloud3}`} />
+        <div className={styles.sun} />
       </div>
 
-      <div className={styles.ground}>
+      <div className={styles.ground} aria-hidden="true">
         <div className={styles.hill} />
         <div className={`${styles.hill} ${styles.hillSmall}`} />
       </div>
 
-      <div className={styles.content}>
-        <div className={styles.logo}>
+      <main className={styles.content}>
+        <div className={styles.eyebrow}>A PORTFOLIO ADVENTURE</div>
+
+        <div className={styles.logo} aria-label="Denky World">
           <span className={styles.logoDenky}>DENKY</span>
           <span className={styles.logoWorld}>WORLD</span>
         </div>
 
-        <div className={styles.hero}>
+        <div className={styles.hero} aria-hidden="true">
           <div className={styles.character} />
+          <div className={styles.questionBlock}>?</div>
           <div className={styles.mushroom} />
         </div>
 
-        <p className={styles.subtitle}>DEV SÊNIOR · TECH LEAD · ARQUITETO</p>
+        <section className={styles.saveSlot} aria-label="Perfil do jogador">
+          <div className={styles.slotHeader}>
+            <span>ARQUIVO 01</span>
+            <span className={styles.online}>● ONLINE</span>
+          </div>
+          <strong>DANIEL AMARAL</strong>
+          <p>DEV SÊNIOR · TECH LEAD · ARQUITETO</p>
+          <div className={styles.slotStats}>
+            <span>5 FASES</span>
+            <span>17 SKILLS</span>
+            <span>5 PROJETOS</span>
+          </div>
+        </section>
 
-        <button className={styles.startBtn} onClick={onStart} type="button">
-          <span>PRESS START</span>
-          <span className={styles.blink}>▶</span>
+        <button className={styles.startBtn} onClick={onStart} type="button" autoFocus>
+          <span className={styles.cursor}>▶</span>
+          <span>NOVO JOGO</span>
         </button>
 
-        <p className={styles.hint}>← → para navegar · ESPAÇO para pular · M = som</p>
-      </div>
+        <p className={styles.hint}>SETAS / WASD PARA MOVER · ESPAÇO PARA PULAR</p>
+      </main>
 
-      <div className={styles.copyright}>© 2026 DENKY.DEV.BR</div>
+      <div className={styles.copyright}>© 2026 DENKY.DEV.BR · BUILD 1.1</div>
     </div>
   )
 }

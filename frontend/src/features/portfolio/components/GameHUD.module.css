@@ -4,50 +4,108 @@
   left: 0;
   right: 0;
   height: var(--hud-height);
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto minmax(40px, 1fr);
+  align-items: center;
+  padding: 0 16px;
+  background: rgba(8, 11, 22, 0.94);
+  border-bottom: 4px solid var(--ink);
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.08);
+  z-index: 60;
+}
+
+.brand {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 0 16px 0 8px;
-  background: rgba(0, 0, 0, 0.6);
-  border-bottom: 4px solid var(--mario-black);
-  z-index: 50;
-  font-size: 10px;
-  gap: 8px;
+  gap: 9px;
+  color: var(--game-cream);
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  color: var(--game-cream);
+  background: var(--game-coral);
+  border: 3px solid var(--ink);
+  box-shadow: inset -3px -3px 0 var(--game-coral-dark);
+  font-size: 12px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 54px);
 }
 
 .hudItem {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
 }
 
 .label {
-  color: var(--mario-yellow);
-  text-shadow: 2px 2px 0 var(--mario-black);
+  color: var(--game-yellow);
+  font-size: 6px;
+  letter-spacing: 1px;
 }
 
 .value {
-  color: var(--mario-white);
-  text-shadow: 2px 2px 0 var(--mario-black);
+  color: var(--game-cream);
+  font-size: 9px;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+.projectCount {
+  flex-direction: row;
 }
 
 .coinIcon {
   width: 14px;
-  height: 14px;
-  background: radial-gradient(circle at 40% 35%, #fff8a0, var(--mario-yellow) 60%, var(--mario-yellow-dark));
-  border: 2px solid var(--mario-black);
+  height: 18px;
+  background: radial-gradient(circle at 40% 35%, #fff8a0, var(--game-yellow) 60%, #c9801d);
+  border: 2px solid var(--ink);
   border-radius: 50%;
-  animation: coin-spin 2s linear infinite;
+  animation: coin-spin 1.6s steps(4, end) infinite;
 }
 
-@media (max-width: 600px) {
+.hud > :last-child {
+  justify-self: end;
+}
+
+@media (max-width: 700px) {
   .hud {
-    font-size: 7px;
+    grid-template-columns: 34px 1fr 34px;
     padding: 0 8px;
-    gap: 4px;
   }
 
-  .hudItem {
-    gap: 4px;
+  .brand {
+    font-size: 0;
+  }
+
+  .brandMark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .stats {
+    gap: clamp(10px, 4vw, 24px);
+  }
+
+  .label {
+    font-size: 5px;
+  }
+
+  .value {
+    font-size: 7px;
+  }
+
+  .projectCount {
+    display: none;
   }
 }

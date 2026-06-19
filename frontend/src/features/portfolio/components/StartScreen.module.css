@@ -1,13 +1,19 @@
 .screen {
   position: fixed;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, var(--mario-sky) 0%, var(--mario-sky-dark) 70%);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #65b9ff 0%, #357bd4 72%);
   overflow: hidden;
   z-index: 100;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: repeating-linear-gradient(180deg, transparent 0 3px, rgba(16, 15, 26, 0.05) 3px 4px);
+  pointer-events: none;
 }
 
 .sky {
@@ -16,133 +22,150 @@
   pointer-events: none;
 }
 
+.sun {
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  width: 62px;
+  height: 62px;
+  background: var(--game-yellow);
+  box-shadow: 0 0 0 10px rgba(255, 215, 65, 0.18), 0 0 42px rgba(255, 215, 65, 0.5);
+}
+
 .cloud {
   position: absolute;
-  background: var(--mario-white);
-  border-radius: 50%;
-  box-shadow:
-    20px 0 0 var(--mario-white),
-    40px -8px 0 var(--mario-white),
-    60px 0 0 var(--mario-white);
-  animation: cloud-drift 30s linear infinite;
+  width: 58px;
+  height: 19px;
+  background: var(--game-cream);
+  box-shadow: 14px -12px 0 var(--game-cream), 34px -5px 0 var(--game-cream), 50px 0 0 var(--game-cream);
+  animation: cloud-drift 32s linear infinite;
 }
 
 .cloud1 {
-  width: 40px;
-  height: 24px;
-  top: 15%;
+  top: 18%;
   left: -120px;
-  animation-duration: 35s;
+  animation-duration: 36s;
 }
 
 .cloud2 {
-  width: 32px;
-  height: 20px;
-  top: 25%;
-  left: -80px;
-  animation-duration: 28s;
-  animation-delay: -10s;
+  top: 31%;
+  left: -90px;
+  transform: scale(0.7);
+  animation-duration: 29s;
+  animation-delay: -9s;
 }
 
 .cloud3 {
-  width: 48px;
-  height: 28px;
-  top: 8%;
+  top: 9%;
   left: -150px;
-  animation-duration: 40s;
-  animation-delay: -20s;
+  animation-duration: 44s;
+  animation-delay: -21s;
 }
 
 .ground {
   position: absolute;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  height: 80px;
-  background: var(--mario-ground);
-  border-top: 8px solid var(--mario-ground-top);
-}
-
-.ground::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--mario-ground-top) 0px,
-    var(--mario-ground-top) 16px,
-    #008000 16px,
-    #008000 32px
-  );
+  height: 76px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08) 25%, transparent 25%) 0 0 / 24px 24px,
+    #8d4a25;
+  border-top: 10px solid #54b95d;
+  box-shadow: inset 0 5px 0 #2d843f;
 }
 
 .hill {
   position: absolute;
-  bottom: 72px;
-  left: 10%;
-  width: 120px;
-  height: 60px;
-  background: var(--mario-green);
-  border-radius: 60px 60px 0 0;
-  border: 4px solid var(--mario-black);
+  bottom: 66px;
+  left: 7%;
+  width: 150px;
+  height: 76px;
+  background: #43a865;
+  border: 4px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 80px 80px 0 0;
+  opacity: 0.82;
 }
+
+.hill::before,
+.hill::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  background: #287d4a;
+  border-radius: 50%;
+}
+
+.hill::before { top: 30px; left: 35px; }
+.hill::after { top: 18px; right: 38px; }
 
 .hillSmall {
   left: auto;
-  right: 15%;
-  width: 80px;
-  height: 40px;
-  border-radius: 40px 40px 0 0;
+  right: 8%;
+  width: 95px;
+  height: 48px;
 }
 
 .content {
   position: relative;
-  z-index: 2;
+  z-index: 5;
+  width: min(560px, calc(100vw - 32px));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 15px;
   padding: 20px;
   text-align: center;
+}
+
+.eyebrow {
+  padding: 6px 9px;
+  color: var(--game-cream);
+  background: rgba(16, 15, 26, 0.72);
+  border: 2px solid var(--ink);
+  font-size: 6px;
+  letter-spacing: 2px;
 }
 
 .logo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  transform: rotate(-1deg);
 }
 
 .logoDenky {
-  font-size: clamp(28px, 6vw, 48px);
-  color: var(--mario-red);
+  color: var(--game-coral);
+  font-size: clamp(34px, 8vw, 62px);
+  letter-spacing: 5px;
   text-shadow:
-    4px 4px 0 var(--mario-black),
-    -2px -2px 0 var(--mario-yellow);
-  letter-spacing: 4px;
-  animation: float 2s ease-in-out infinite;
+    0 5px 0 var(--game-coral-dark),
+    5px 9px 0 var(--ink),
+    -3px -3px 0 var(--game-cream);
+  animation: title-drop 0.7s steps(5, end) both;
 }
 
 .logoWorld {
-  font-size: clamp(16px, 3vw, 24px);
-  color: var(--mario-yellow);
-  text-shadow: 3px 3px 0 var(--mario-black);
-  letter-spacing: 8px;
+  color: var(--game-yellow);
+  font-size: clamp(16px, 3.4vw, 26px);
+  letter-spacing: 11px;
+  text-shadow: 3px 4px 0 var(--ink);
+  animation: title-drop 0.7s 0.12s steps(5, end) both;
 }
 
 .hero {
   display: flex;
   align-items: flex-end;
-  gap: 24px;
-  margin: 16px 0;
+  gap: 18px;
+  min-height: 52px;
 }
 
 .character {
-  width: 32px;
-  height: 48px;
   position: relative;
+  width: 34px;
+  height: 48px;
   animation: walk 0.4s steps(2) infinite;
 }
 
@@ -151,92 +174,185 @@
   position: absolute;
   inset: 0;
   background:
-    /* hat */
-    linear-gradient(var(--mario-red) 0 0) 4px 0 / 24px 8px,
-    /* face */
-    linear-gradient(#ffcc99 0 0) 8px 8px / 16px 12px,
-    /* body */
-    linear-gradient(var(--mario-red) 0 0) 4px 20px / 24px 16px,
-    /* overalls */
-    linear-gradient(var(--mario-blue) 0 0) 8px 28px / 16px 12px,
-    /* legs */
-    linear-gradient(var(--mario-brown) 0 0) 4px 36px / 10px 12px,
-    linear-gradient(var(--mario-brown) 0 0) 18px 36px / 10px 12px;
+    linear-gradient(var(--game-coral) 0 0) 4px 0 / 26px 9px,
+    linear-gradient(#f6bd82 0 0) 8px 9px / 18px 12px,
+    linear-gradient(var(--game-coral) 0 0) 4px 21px / 26px 15px,
+    linear-gradient(#376dd0 0 0) 8px 29px / 18px 11px,
+    linear-gradient(#62391f 0 0) 4px 39px / 11px 9px,
+    linear-gradient(#62391f 0 0) 19px 39px / 11px 9px;
   background-repeat: no-repeat;
-  border: 2px solid var(--mario-black);
+  filter: drop-shadow(3px 3px 0 var(--ink));
+}
+
+.questionBlock {
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  margin-bottom: 18px;
+  color: #60430f;
+  background: var(--game-yellow);
+  border: 3px solid var(--ink);
+  box-shadow: inset -3px -3px 0 #c88920, inset 3px 3px 0 #fff19a;
+  font-size: 13px;
+  animation: block-bounce 1.2s steps(2, end) infinite;
 }
 
 .mushroom {
-  width: 24px;
+  width: 25px;
   height: 28px;
   background:
-    radial-gradient(circle at 12px 10px, var(--mario-white) 4px, transparent 4px),
-    radial-gradient(circle at 6px 8px, var(--mario-white) 3px, transparent 3px),
-    radial-gradient(circle at 18px 8px, var(--mario-white) 3px, transparent 3px),
-    linear-gradient(var(--mario-red) 0 0) 0 0 / 24px 16px,
-    linear-gradient(#f5deb3 0 0) 4px 14px / 16px 14px;
+    radial-gradient(circle at 12px 9px, var(--game-cream) 0 4px, transparent 5px),
+    linear-gradient(var(--game-coral) 0 0) 0 0 / 25px 16px,
+    linear-gradient(#f6bd82 0 0) 5px 14px / 15px 14px;
   background-repeat: no-repeat;
-  border: 2px solid var(--mario-black);
-  border-radius: 12px 12px 4px 4px;
-  animation: float 1.5s ease-in-out infinite;
+  border: 2px solid var(--ink);
+  border-radius: 12px 12px 3px 3px;
+  animation: float 1.5s steps(3, end) infinite;
 }
 
-.subtitle {
-  font-size: clamp(8px, 1.5vw, 10px);
-  color: var(--mario-white);
-  text-shadow: 2px 2px 0 var(--mario-black);
-  line-height: 1.8;
+.saveSlot {
+  width: min(450px, 100%);
+  padding: 13px 15px;
+  color: var(--game-cream);
+  background: rgba(24, 26, 47, 0.95);
+  border: 4px solid var(--ink);
+  box-shadow: inset 0 0 0 3px #3b456f, 8px 8px 0 rgba(0, 0, 0, 0.24);
+  text-align: left;
+}
+
+.slotHeader,
+.slotStats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  color: #9faad2;
+  font-size: 5px;
+}
+
+.online {
+  color: var(--game-mint);
+}
+
+.saveSlot strong {
+  display: block;
+  margin: 12px 0 7px;
+  color: var(--game-yellow);
+  font-size: 10px;
+}
+
+.saveSlot p {
+  color: var(--game-cream);
+  font-size: 6px;
+  line-height: 1.7;
+}
+
+.slotStats {
+  justify-content: flex-start;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 2px solid #3b456f;
+}
+
+.slotStats span {
+  color: #b9c6eb;
 }
 
 .startBtn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: clamp(10px, 2vw, 14px);
-  color: var(--mario-yellow);
-  text-shadow: 2px 2px 0 var(--mario-black);
-  padding: 16px 24px;
-  animation: float 1s ease-in-out infinite;
-  transition: transform 0.15s;
+  gap: 10px;
+  padding: 13px 20px;
+  color: var(--game-yellow);
+  background: rgba(16, 15, 26, 0.86);
+  border: 3px solid transparent;
+  font-size: 11px;
+  text-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.12s, border-color 0.12s;
 }
 
-.startBtn:hover {
-  transform: scale(1.1);
-  color: var(--mario-white);
+.startBtn:hover,
+.startBtn:focus-visible {
+  transform: scale(1.06);
+  border-color: var(--game-cream);
+  outline: none;
 }
 
-.blink {
-  animation: blink 0.8s step-end infinite;
+.cursor {
+  animation: blink 0.7s step-end infinite;
 }
 
 .hint {
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 8px;
+  color: rgba(255, 245, 214, 0.72);
+  font-size: 6px;
+  text-shadow: 2px 2px 0 var(--ink);
 }
 
 .copyright {
   position: absolute;
-  bottom: 100px;
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.5);
+  bottom: 24px;
+  z-index: 21;
+  color: rgba(255, 245, 214, 0.62);
+  font-size: 5px;
 }
 
 .soundToggle {
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 10;
+  z-index: 30;
 }
 
-@media (max-width: 480px) {
+@keyframes title-drop {
+  from { opacity: 0; transform: translateY(-25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .content {
+    gap: 11px;
+    padding: 12px;
+  }
+
   .hero {
-    gap: 16px;
+    min-height: 40px;
+    transform: scale(0.82);
+  }
+
+  .saveSlot {
+    padding: 11px;
   }
 
   .hint {
-    font-size: 6px;
-    max-width: 280px;
-    line-height: 2;
+    font-size: 5px;
+    line-height: 1.8;
+  }
+
+  .hill {
+    transform: scale(0.7);
+    transform-origin: bottom left;
+  }
+
+  .hillSmall {
+    transform-origin: bottom right;
+  }
+}
+
+@media (max-height: 680px) {
+  .content {
+    gap: 8px;
+  }
+
+  .hero {
+    display: none;
+  }
+
+  .saveSlot {
+    padding-block: 9px;
+  }
+
+  .saveSlot strong {
+    margin-block: 8px 5px;
   }
 }

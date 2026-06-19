@@ -4,15 +4,22 @@ interface PixelHeroProps {
   isJumping: boolean
   facingRight: boolean
   isWalking?: boolean
+  inWorldMap?: boolean
 }
 
-export function PixelHero({ isJumping, facingRight, isWalking = false }: PixelHeroProps) {
+export function PixelHero({
+  isJumping,
+  facingRight,
+  isWalking = false,
+  inWorldMap = false,
+}: PixelHeroProps) {
   return (
     <div
       className={[
         styles.hero,
         isJumping ? styles.jumping : '',
         isWalking ? styles.walking : '',
+        inWorldMap ? styles.inWorldMap : '',
         facingRight ? styles.right : styles.left,
       ]
         .filter(Boolean)
