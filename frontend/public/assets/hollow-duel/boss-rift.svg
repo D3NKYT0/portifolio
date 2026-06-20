@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Boss do Hollow">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#120f24"/>
+      <stop offset="50%" stop-color="#241738"/>
+      <stop offset="100%" stop-color="#3e2127"/>
+    </linearGradient>
+    <radialGradient id="lava" cx="50%" cy="78%" r="50%">
+      <stop offset="0%" stop-color="#f46036" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#f46036" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg3)"/>
+  <rect width="1200" height="675" fill="url(#lava)"/>
+  <polygon points="600,170 720,460 480,460" fill="#0b1020" stroke="#ae3094" stroke-width="6"/>
+  <circle cx="600" cy="310" r="44" fill="#02c3b4"/>
+  <circle cx="600" cy="310" r="20" fill="#0b1020"/>
+  <text x="72" y="92" fill="#f8fafc" font-size="54" font-family="Inter, Arial, sans-serif" font-weight="800">BOSS DO HOLLOW</text>
+  <text x="74" y="132" fill="#94a3b8" font-size="24" font-family="Inter, Arial, sans-serif">Placeholder para evento cooperativo</text>
+</svg>

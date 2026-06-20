@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Deck Lendario">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1328"/>
+      <stop offset="55%" stop-color="#1e2446"/>
+      <stop offset="100%" stop-color="#3a1f2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg2)"/>
+  <rect x="220" y="145" width="190" height="330" rx="18" fill="#0b1020" stroke="#f46036" stroke-opacity="0.7"/>
+  <rect x="505" y="125" width="190" height="360" rx="18" fill="#0b1020" stroke="#02c3b4" stroke-opacity="0.8"/>
+  <rect x="790" y="145" width="190" height="330" rx="18" fill="#0b1020" stroke="#ae3094" stroke-opacity="0.8"/>
+  <text x="70" y="92" fill="#f8fafc" font-size="54" font-family="Inter, Arial, sans-serif" font-weight="800">DECK LENDARIO</text>
+  <text x="72" y="132" fill="#94a3b8" font-size="24" font-family="Inter, Arial, sans-serif">Substitua por arte oficial quando quiser</text>
+</svg>

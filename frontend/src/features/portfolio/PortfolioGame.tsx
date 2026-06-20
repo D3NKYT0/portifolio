@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { StartScreen } from './components/StartScreen'
 import { GameHUD } from './components/GameHUD'
@@ -8,13 +8,17 @@ import { SkillsSection } from './components/SkillsSection'
 import { ExperienceSection } from './components/ExperienceSection'
 import { ProjectsSection } from './components/ProjectsSection'
 import { ContactSection } from './components/ContactSection'
+import { HollowDuelSection } from './components/HollowDuelSection'
 import { usePortfolio } from './hooks/usePortfolio'
 import { useGameControls } from './hooks/useGameControls'
 import { useSound } from './hooks/useSound'
+import { requestStageMusic } from './audio/stageMusic'
 import type { WorldSection } from '@/types/portfolio'
 import styles from './PortfolioGame.module.css'
 
-const PLAYABLE_STAGES: WorldSection[] = ['about', 'skills', 'experience', 'projects', 'contact']
+const PLAYABLE_STAGES: WorldSection[] = ['about', 'skills', 'experience', 'projects', 'contact', 'hollow-duel']
+
+const SECRET_STAGE_NODE = { id: 'hollow-duel', label: 'HOLLOW', x: 6, icon: 'portal' }
 
 const STAGE_META: Record<WorldSection, { number: string; title: string; mission: string }> = {
   start: { number: '0-0', title: 'INÍCIO', mission: 'Pressione start para entrar no mundo.' },
@@ -23,6 +27,7 @@ const STAGE_META: Record<WorldSection, { number: string; title: string; mission:
   experience: { number: '2-1', title: 'JORNADA PROFISSIONAL', mission: 'Revise as missões já concluídas.' },
   projects: { number: '2-2', title: 'FASES PUBLICADAS', mission: 'Entre nos projetos em produção.' },
   contact: { number: '3-1', title: 'MISSÃO CO-OP', mission: 'Desbloqueie uma nova parceria.' },
+  'hollow-duel': { number: 'S-1', title: 'HOLLOW DUEL', mission: 'Atravesse o rasgo e encare o projeto secreto.' },
 }
 
 export function PortfolioGame() {
@@ -36,6 +41,12 @@ export function PortfolioGame() {
   const cardTimer = useRef<number | undefined>(undefined)
   const { data, isLoading, error, refetch, isFetching } = usePortfolio({ enabled: started })
   const { muted, boot, sfx, toggle } = useSound()
+  const worldNodes = useMemo(() => {
+    const nodes = data?.world_map ?? []
+    return nodes.some((node) => node.id === SECRET_STAGE_NODE.id)
+      ? nodes
+      : [...nodes, SECRET_STAGE_NODE]
+  }, [data?.world_map])
 
   const handleSectionChange = useCallback((section: WorldSection) => {
     const target = section === 'start' ? 'about' : section
@@ -68,6 +79,10 @@ export function PortfolioGame() {
     started,
     sfx,
   )
+  useEffect(() => {
+    if (!started) return
+    requestStageMusic(activeSection === 'hollow-duel' ? 'boss' : null)
+  }, [activeSection, started])
 
   const handleStart = async () => {
     await boot()
@@ -173,11 +188,22 @@ export function PortfolioGame() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSection}
-            className={styles.sectionsTrack}
-            initial={{ opacity: 0, x: facingRight ? 60 : -60, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: facingRight ? -60 : 60, scale: 0.98 }}
-            transition={{ duration: 0.28, ease: 'easeOut' }}
+            className={`${styles.sectionsTrack} ${
+              activeSection === 'hollow-duel' ? styles.secretTrack : ''
+            }`}
+            initial={activeSection === 'hollow-duel'
+              ? { opacity: 0, scale: 0.3, rotate: -6, filter: 'blur(16px) brightness(1.8)' }
+              : { opacity: 0, x: facingRight ? 60 : -60, scale: 0.98 }
+            }
+            animate={{ opacity: 1, x: 0, scale: 1, rotate: 0, filter: 'blur(0px) brightness(1)' }}
+            exit={activeSection === 'hollow-duel'
+              ? { opacity: 0, scale: 1.35, rotate: 4, filter: 'blur(18px) brightness(1.7)' }
+              : { opacity: 0, x: facingRight ? -60 : 60, scale: 0.98 }
+            }
+            transition={activeSection === 'hollow-duel'
+              ? { duration: 0.68, ease: 'easeOut' }
+              : { duration: 0.28, ease: 'easeOut' }
+            }
           >
             {activeSection === 'about' && <AboutSection profile={data.profile} />}
             {activeSection === 'skills' && <SkillsSection skills={data.skills} />}
@@ -192,12 +218,15 @@ export function PortfolioGame() {
                 onError={() => sfx('error')}
               />
             )}
+            {activeSection === 'hollow-duel' && (
+              <HollowDuelSection onEnter={() => sfx('powerup')} />
+            )}
           </motion.div>
         </AnimatePresence>
       </main>
 
       <WorldNav
-        nodes={data.world_map}
+        nodes={worldNodes}
         activeSection={activeSection}
         visitedSections={visitedSections}
         isJumping={isJumping}
@@ -209,7 +238,7 @@ export function PortfolioGame() {
       <div className={styles.ground} aria-hidden="true" />
 
       <div className={styles.controlsHint}>
-        <kbd>A</kbd><kbd>D</kbd> MOVER <span>•</span> <kbd>ESPAÇO</kbd> PULAR <span>•</span> <kbd>1—5</kbd> FASES <span>•</span> <kbd>M</kbd> SOM
+        <kbd>A</kbd><kbd>D</kbd> MOVER <span>•</span> <kbd>ESPAÇO</kbd> PULAR <span>•</span> <kbd>1—6</kbd> FASES <span>•</span> <kbd>M</kbd> SOM
       </div>
 
       <div className={styles.mobileControls} aria-label="Controles do jogo">
@@ -228,8 +257,10 @@ export function PortfolioGame() {
             transition={{ duration: 0.16 }}
             aria-live="polite"
           >
-            <div className={styles.stageCard}>
-              <span>WORLD {stage.number}</span>
+            <div className={`${styles.stageCard} ${
+              activeSection === 'hollow-duel' ? styles.secretStageCard : ''
+            }`}>
+              <span>{activeSection === 'hollow-duel' ? 'SECRET LEVEL' : 'WORLD'} {stage.number}</span>
               <strong>{stage.title}</strong>
             </div>
           </motion.div>

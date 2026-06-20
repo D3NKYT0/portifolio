@@ -607,3 +607,105 @@
     padding-block: 14px;
   }
 }
+.game::before {
+  content: '';
+  position: absolute;
+  inset: var(--hud-height) 0 58px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 0 7%, rgba(34, 211, 238, 0.2) 8% 9%, transparent 10% 15%, rgba(168, 85, 247, 0.28) 16% 18%, transparent 19% 30%),
+    radial-gradient(circle at 50% 50%, rgba(76, 29, 149, 0.42), transparent 48%);
+  transform: scale(0.6) rotate(-12deg);
+  transition: opacity 0.45s, transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.game[data-world='hollow-duel'] {
+  --world-sky-top: #0d061a;
+  --world-sky-bottom: #030107;
+}
+
+.game[data-world='hollow-duel']::before {
+  opacity: 1;
+  transform: scale(1.15) rotate(0deg);
+  animation: void-breathe 3.4s ease-in-out infinite;
+}
+
+.game[data-world='hollow-duel'] .sun {
+  opacity: 0;
+}
+
+.game[data-world='hollow-duel'] .cloud {
+  opacity: 0.14;
+  filter: hue-rotate(55deg);
+}
+
+.game[data-world='hollow-duel'] .scenery {
+  filter: saturate(0.25) hue-rotate(215deg) brightness(0.38);
+}
+
+.game[data-world='hollow-duel'] .ground {
+  background:
+    linear-gradient(135deg, rgba(192, 132, 252, 0.12) 25%, transparent 25%) 0 0 / 24px 24px,
+    #19082d;
+  border-top-color: #7e22ce;
+  box-shadow: inset 0 5px 0 #3b0764, 0 -8px 24px rgba(168, 85, 247, 0.22);
+}
+
+.secretTrack {
+  transform-origin: center;
+  will-change: transform, filter, opacity;
+}
+
+.secretStageCard {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 0, rgba(34, 211, 238, 0.18), transparent 42%),
+    rgba(8, 4, 16, 0.98);
+  border-color: #d8b4fe;
+  box-shadow:
+    0 0 0 6px #160b2c,
+    0 0 32px rgba(168, 85, 247, 0.78),
+    12px 12px 0 rgba(0, 0, 0, 0.46);
+}
+
+.secretStageCard::before,
+.secretStageCard::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  color: #22d3ee;
+  text-shadow: 0 0 12px #22d3ee;
+  transform: translateY(-50%);
+  animation: secret-sigil 0.8s steps(2, end) infinite;
+}
+
+.secretStageCard::before { left: 18px; }
+.secretStageCard::after { right: 18px; animation-delay: -0.4s; }
+
+@keyframes void-breathe {
+  50% { filter: hue-rotate(22deg) brightness(1.2); transform: scale(1.26) rotate(4deg); }
+}
+
+@keyframes secret-sigil {
+  50% { opacity: 0.35; transform: translateY(-50%) scale(0.75); }
+}
+
+@media (max-width: 700px) {
+  .game::before {
+    inset-block-end: 50px;
+  }
+
+  .secretStageCard::before { left: 8px; }
+  .secretStageCard::after { right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game[data-world='hollow-duel']::before,
+  .secretStageCard::before,
+  .secretStageCard::after {
+    animation: none;
+  }
+}

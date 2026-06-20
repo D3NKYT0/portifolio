@@ -19,6 +19,7 @@ const WORLD_NAMES: Record<WorldSection, string> = {
   experience: '2-1',
   projects: '2-2',
   contact: '3-1',
+  'hollow-duel': 'S-1',
 }
 
 export function GameHUD({

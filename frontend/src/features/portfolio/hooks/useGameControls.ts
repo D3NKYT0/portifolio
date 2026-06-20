@@ -8,6 +8,7 @@ const SECTIONS: WorldSection[] = [
   'experience',
   'projects',
   'contact',
+  'hollow-duel',
 ]
 
 export function useGameControls(
@@ -107,6 +108,9 @@ export function useGameControls(
           break
         case '5':
           onSectionChange('contact')
+          break
+        case '6':
+          onSectionChange('hollow-duel')
           break
       }
     }

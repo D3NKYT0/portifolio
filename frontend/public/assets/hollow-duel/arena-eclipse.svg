@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Arena Eclipse">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="55%" stop-color="#17223c"/>
+      <stop offset="100%" stop-color="#2d1b4d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="45%">
+      <stop offset="0%" stop-color="#02c3b4" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#02c3b4" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#02c3b4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <circle cx="600" cy="335" r="170" fill="none" stroke="#ae3094" stroke-width="6" opacity="0.8"/>
+  <circle cx="600" cy="335" r="235" fill="none" stroke="#f46036" stroke-width="4" opacity="0.5"/>
+  <path d="M180 540 L600 250 L1020 540" fill="none" stroke="#f8fafc" stroke-opacity="0.3" stroke-width="3"/>
+  <text x="60" y="92" fill="#f8fafc" font-size="54" font-family="Inter, Arial, sans-serif" font-weight="800">ARENA ECLIPSE</text>
+  <text x="62" y="132" fill="#94a3b8" font-size="24" font-family="Inter, Arial, sans-serif">Mapa temporario para ajustes visuais</text>
+</svg>

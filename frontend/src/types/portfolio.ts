@@ -63,4 +63,11 @@ export interface ContactResponse {
   message: string
 }
 
-export type WorldSection = 'start' | 'about' | 'skills' | 'experience' | 'projects' | 'contact'
+export type WorldSection =
+  | 'start'
+  | 'about'
+  | 'skills'
+  | 'experience'
+  | 'projects'
+  | 'contact'
+  | 'hollow-duel'
