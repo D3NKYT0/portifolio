@@ -13,6 +13,7 @@ import { usePortfolio } from './hooks/usePortfolio'
 import { useGameControls } from './hooks/useGameControls'
 import { useSound } from './hooks/useSound'
 import { requestStageMusic } from './audio/stageMusic'
+import { mergePortfolioProjects } from './data/projectCatalog'
 import type { WorldSection } from '@/types/portfolio'
 import styles from './PortfolioGame.module.css'
 
@@ -47,6 +48,11 @@ export function PortfolioGame() {
       ? nodes
       : [...nodes, SECRET_STAGE_NODE]
   }, [data?.world_map])
+
+  const portfolioProjects = useMemo(
+    () => mergePortfolioProjects(data?.projects ?? []),
+    [data?.projects],
+  )
 
   const handleSectionChange = useCallback((section: WorldSection) => {
     const target = section === 'start' ? 'about' : section
@@ -142,7 +148,7 @@ export function PortfolioGame() {
   return (
     <div className={styles.game} data-world={activeSection}>
       <GameHUD
-        data={data}
+        data={{ ...data, projects: portfolioProjects }}
         activeSection={activeSection}
         score={score}
         completed={visitedSections.length}
@@ -209,7 +215,7 @@ export function PortfolioGame() {
             {activeSection === 'skills' && <SkillsSection skills={data.skills} />}
             {activeSection === 'experience' && <ExperienceSection experience={data.experience} />}
             {activeSection === 'projects' && (
-              <ProjectsSection projects={data.projects} onLinkClick={() => sfx('coin')} />
+              <ProjectsSection projects={portfolioProjects} onLinkClick={() => sfx('coin')} />
             )}
             {activeSection === 'contact' && (
               <ContactSection

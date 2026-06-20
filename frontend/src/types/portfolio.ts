@@ -26,8 +26,10 @@ export interface Experience {
 export interface Project {
   name: string
   description: string
-  url: string
+  url?: string
   color: string
+  category?: string
+  actionLabel?: string
 }
 
 export interface Education {

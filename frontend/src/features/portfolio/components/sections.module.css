@@ -546,3 +546,58 @@
     overflow-wrap: anywhere;
   }
 }
+/* Catálogo compacto: comporta projetos públicos e privados sem virar uma lista infinita. */
+.projectGrid {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 11px;
+}
+
+.projectCard {
+  min-height: 136px;
+  gap: 8px;
+  padding: 13px;
+}
+
+.projectHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.projectMeta {
+  max-width: calc(100% - 38px);
+  overflow: hidden;
+  padding: 4px 5px;
+  color: #b9c6eb;
+  background: rgba(8, 11, 22, 0.78);
+  border: 1px solid #394268;
+  font-size: 4px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projectCard p {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.projectCardStatic {
+  cursor: default;
+}
+
+.projectCardStatic:hover {
+  transform: none;
+  border-color: #394268;
+}
+
+.projectLinkMuted {
+  color: #8992af;
+}
+
+@media (max-width: 700px) {
+  .projectGrid {
+    grid-template-columns: 1fr;
+  }
+}
