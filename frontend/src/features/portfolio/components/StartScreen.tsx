@@ -61,6 +61,9 @@ export function StartScreen({ onStart, muted, onToggleSound }: StartScreenProps)
         </button>
 
         <p className={styles.hint}>SETAS / WASD PARA MOVER · ESPAÇO PARA PULAR</p>
+        <a className={styles.textResume} href="/curriculo/">
+          CURRÍCULO EM VERSÃO TEXTUAL
+        </a>
       </main>
 
       <div className={styles.copyright}>© 2026 DENKY.DEV.BR · BUILD 1.1</div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://denky.dev.br/sitemap.xml

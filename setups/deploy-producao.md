@@ -90,3 +90,30 @@ docker compose --profile static up --build -d frontend nginx
 ```
 
 Confirme no `.env`: `COMPOSE_PROFILES=static` e `FRONTEND_SERVE_MODE=static`.
+
+## 8. Indexação nos buscadores
+
+Após publicar, confirme:
+
+```bash
+curl -I https://denky.dev.br/
+curl https://denky.dev.br/robots.txt
+curl https://denky.dev.br/sitemap.xml
+curl -I https://denky.dev.br/uma-rota-inexistente
+curl -I https://www.denky.dev.br/
+```
+
+Resultados esperados: página inicial `200`, arquivos de rastreamento válidos, rota
+inexistente `404` e domínio `www` redirecionando com `301`.
+
+### Google Search Console
+
+1. Adicione a propriedade de domínio `denky.dev.br` e faça a verificação por DNS.
+2. Em **Sitemaps**, envie `https://denky.dev.br/sitemap.xml`.
+3. Em **Inspeção de URL**, teste e solicite a indexação de `/` e `/curriculo/`.
+
+### Bing Webmaster Tools
+
+1. Adicione ou importe o site já verificado no Google Search Console.
+2. Envie `https://denky.dev.br/sitemap.xml` em **Sitemaps**.
+3. Use a inspeção de URL para solicitar rastreamento de `/` e `/curriculo/`.

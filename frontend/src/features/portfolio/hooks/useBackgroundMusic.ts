@@ -53,14 +53,14 @@ function persist(key: string, value: string) {
 }
 
 export function useBackgroundMusic() {
-  const initialTrackIndex = useRef(readStoredTrackIndex())
+  const [initialTrackIndex] = useState(readStoredTrackIndex)
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(initialTrackIndex)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const trackIndexRef = useRef(initialTrackIndex.current)
+  const trackIndexRef = useRef(initialTrackIndex)
   const playbackModeRef = useRef<PlaybackMode>(readStoredMode())
   const nextRef = useRef<() => void>(() => {})
   const lastSavedSecondRef = useRef(-1)
 
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(initialTrackIndex.current)
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolumeState] = useState(readStoredVolume)
   const [playbackMode, setPlaybackModeState] = useState<PlaybackMode>(readStoredMode)
@@ -170,7 +170,7 @@ export function useBackgroundMusic() {
 
   useEffect(() => {
     const audio = new Audio()
-    const track = BACKGROUND_TRACKS[initialTrackIndex.current] ?? BACKGROUND_TRACKS[0]
+    const track = BACKGROUND_TRACKS[initialTrackIndex] ?? BACKGROUND_TRACKS[0]
     if (!track) return undefined
 
     audioRef.current = audio
@@ -233,7 +233,7 @@ export function useBackgroundMusic() {
       audio.src = ''
       audioRef.current = null
     }
-  }, [])
+  }, [initialTrackIndex])
 
   useEffect(() => {
     if (!('mediaSession' in navigator) || !currentTrack) return
@@ -268,4 +268,3 @@ export function useBackgroundMusic() {
 }
 
 export type BackgroundMusicController = ReturnType<typeof useBackgroundMusic>
-

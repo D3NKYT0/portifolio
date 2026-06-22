@@ -289,6 +289,19 @@
   text-shadow: 2px 2px 0 var(--ink);
 }
 
+.textResume {
+  color: var(--game-cream);
+  font-size: 6px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+.textResume:hover,
+.textResume:focus-visible {
+  color: var(--game-yellow);
+}
+
 .copyright {
   position: absolute;
   bottom: 24px;

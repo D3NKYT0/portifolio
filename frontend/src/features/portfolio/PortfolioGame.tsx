@@ -40,7 +40,9 @@ export function PortfolioGame() {
   const [showStageCard, setShowStageCard] = useState(false)
   const moveTimer = useRef<number | undefined>(undefined)
   const cardTimer = useRef<number | undefined>(undefined)
-  const { data, isLoading, error, refetch, isFetching } = usePortfolio({ enabled: started })
+  // Carrega o currículo imediatamente. A tela de início continua sendo apenas a
+  // experiência visual; os dados públicos não dependem mais de interação humana.
+  const { data, isLoading, error, refetch, isFetching } = usePortfolio()
   const { muted, boot, sfx, toggle } = useSound()
   const worldNodes = useMemo(() => {
     const nodes = data?.world_map ?? []
